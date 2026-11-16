@@ -15,16 +15,26 @@ import { authRouter } from './routes/auth/auth.routes'
 dotenv.config({
     path: [
         resolve(process.cwd(), '.env'),
+        resolve(process.cwd(), 'src', '.env'),
         resolve(process.cwd(), '..', '.env')
     ]
 })
 
 async function mainEntryFunction(){
+    const clerkPublishableKey = process.env.CLERK_PUBLISHABLE_KEY
+    const clerkSecretKey = process.env.CLERK_SECRET_KEY
+
+    if (!clerkPublishableKey || !clerkSecretKey) {
+        throw new Error(
+            'Missing Clerk server keys. Set CLERK_PUBLISHABLE_KEY and CLERK_SECRET_KEY in Backend/.env or Backend/src/.env.'
+        )
+    }
+
     await connectDB()
 
     const app = express()
 
-    const corsOrigins = (process.env.CORS_ORIGINS ||"http://localhost:3000")
+    const corsOrigins = (process.env.CORS_ORIGINS ||"http://localhost:3000,http://localhost:5173")
     .split(",").map(origin=> origin.trim()).filter(Boolean)
 
     app.use(
@@ -36,7 +46,9 @@ async function mainEntryFunction(){
 
     app.use(express.json())
     app.use(morgan('dev'))
-    app.use(clerkMiddleware())
+    app.use(clerkMiddleware({
+        publishableKey: clerkPublishableKey
+    }))
 
     app.get("/health", (req,res)=>{
         res.status(200).json(ok({message: "server is healthy in running state"}))
