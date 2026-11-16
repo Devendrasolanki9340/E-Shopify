@@ -2,7 +2,9 @@
 
 
 // import { LayoutDashboard, Package, TicketPercent, ShoppingCart, Settings } from "lucide-react";
-import { NavLink, Outlet } from "react-router";
+// import { NavLink, Outlet } from "react-router";
+
+import { Outlet } from "react-router";
 
 
 // const adminLinks = [
@@ -14,9 +16,11 @@ import { NavLink, Outlet } from "react-router";
 // ];
 
 export function AdminLayout(){
-  return (
-    <div>
-      <h1>Admin layout</h1>
-    </div>
-  );
+  return <Outlet/>
+  // return (
+  //   <div>
+  //     <h1>Admin layout</h1>
+  //     <h1>Admin page </h1>
+  //   </div>
+  // );
 }
