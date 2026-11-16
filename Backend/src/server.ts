@@ -11,6 +11,7 @@ import { notFound } from './middleware/notFound'
 import { errorHandler } from './middleware/errorhandler'
 import { clerkMiddleware } from '@clerk/express'
 import { authRouter } from './routes/auth/auth.routes'
+import { adminProductRouter } from './routes/admin/product.routes'
 
 dotenv.config({
     path: [
@@ -56,6 +57,9 @@ async function mainEntryFunction(){
 
     // auth Router
     app.use("/auth" , authRouter)
+
+    //  admin routes
+    app.use("/admin" , adminProductRouter)
 
     app.use(notFound)
     app.use(errorHandler)
