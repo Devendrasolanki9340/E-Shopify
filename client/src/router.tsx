@@ -8,11 +8,15 @@ import { ProtectedLayout } from "./components/auth/ProtectedLayout";
 import { CustomerProfile } from "./pages/customer/Profile";
 import { RoleGuardLayout } from "./components/auth/RoleGuardLayout";
 import { AdminLayout } from "./components/layout/AdminLayout";
-import AdminDashboard from "./components/admin/Dashboard";
-import AdminProducts from "./components/admin/Products";
-import AdminCoupons from "./components/admin/Coupons";
-import AdminOrders from "./components/admin/Orders";
-import AdminSettings from "./components/admin/Settings";
+import AdminDashboard from "./pages/admin/Dashboard";
+import AdminProducts from "./pages/admin/Products";
+import AdminCoupons from "./pages/admin/Coupons";
+import AdminOrders from "./pages/admin/Orders";
+import AdminSettings from "./pages/admin/Settings";
+
+
+
+
 
 
 
