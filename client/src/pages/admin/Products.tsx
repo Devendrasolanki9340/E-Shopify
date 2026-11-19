@@ -28,7 +28,7 @@ function AdminProducts(){
     categories,
     loading,
     categoryDialogOpen,
-    setcategoryDialogOpen,
+    setCategoryDialogOpen,
     productDialogOpen,
     setProductDialogOpen,
     editingProduct,
@@ -44,7 +44,7 @@ function AdminProducts(){
                     <CardTitle className={cardTitleClass}>Products</CardTitle>
                     <ProductToolbar search={search}
                     onSearchChange={setSearch}
-                    onManageCategories={()=> setcategoryDialogOpen(true)}
+                    onManageCategories={()=> setCategoryDialogOpen(true)}
                     onAddProduct={openCreateDialog}
                     />
                 </CardHeader>
@@ -53,7 +53,7 @@ function AdminProducts(){
 
             <CategoryDialog
             open={categoryDialogOpen}
-            onOpenChange={setcategoryDialogOpen}
+            onOpenChange={setCategoryDialogOpen}
             categories={categories}
             onSaved={refreshAll}
             />

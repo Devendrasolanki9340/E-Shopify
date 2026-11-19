@@ -43,7 +43,7 @@ export function useAdminProducts(){
     setProductDialogOpen(true);
   }
 
-  function closeProductDialgg() {
+  function closeProductDialog() {
     setProductDialogOpen(false);
     setEditingProduct(null);
   }
@@ -79,7 +79,7 @@ export function useAdminProducts(){
     setProductDialogOpen,
     editingProduct,
     openCreateDialog,
-    closeProductDialgg,
+    closeProductDialog,
     openEditDialog,
     }
 }
