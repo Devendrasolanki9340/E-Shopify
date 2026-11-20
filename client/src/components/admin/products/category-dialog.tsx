@@ -1,7 +1,11 @@
 
 
 import { Dialog, DialogContent, DialogHeader,DialogTitle } from "@/components/ui/dialog";
+import { createAdminCategory, updateAdminCategory } from "@/features/admin/products/api";
 import type { Category } from "@/features/admin/products/types";
+import { Button, Input, Separator } from "@base-ui/react";
+import { Tag } from "lucide-react";
+import { useState } from "react";
 
 
 
@@ -45,12 +49,70 @@ export function CategoryDialog({
   onSaved,
 }: CategoryDialogProps){
 
+  const [name, setName] = useState("");
+  const [editingCategory, setEditingCategory] = useState<Category | null>(null);
+  const [saving, setSaving] = useState(false);
+
+
+  async function handleSave() {
+    if (!name.trim()) return;
+
+    try {
+      setSaving(true);
+
+      if (editingCategory) {
+        await updateAdminCategory(editingCategory._id, { name: name.trim() });
+      } else {
+        await createAdminCategory({ name: name.trim() });
+      }
+
+      setName("");
+      setEditingCategory(null);
+      await onSaved();
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  function handleEdit(getCurrentCategory: Category) {
+    setEditingCategory(getCurrentCategory);
+    setName(getCurrentCategory.name);
+  }
+
     return <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className={dialogContentClass}>
             <DialogHeader>
                 <DialogTitle>Manage Catgories</DialogTitle>
             </DialogHeader>
-        </DialogContent>
+            <div className={contentWrap}>
+              <div className="p-1 px-1 py-0 ">
+                <Input
+                value={name}
+                onChange={(event) => setName(event.target.value)}
+                placeholder="Enter category name you want to add!!!"
+                />
+                {/* <Separator/> */}
+                <Button onClick={handleSave} disabled= {saving || !name.trim()}>
+               {editingCategory ? "Update" : "Add"}
+               </Button>
+              </div>
 
+              <Separator/>
+
+              <div className={categoriesList}>
+                {categories.map(cat=>(
+                  <div key={cat._id} className={categoryRow}>
+                    <div className={categoryInfo}>
+                      <Tag className={categoryIcon}/>
+                      <span className={categoryName}>{cat.name}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              
+
+            </div>
+        </DialogContent>
     </Dialog>
 }
